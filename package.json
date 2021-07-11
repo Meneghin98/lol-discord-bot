@@ -1,0 +1,24 @@
+{
+  "name": "lol-discord-bot",
+  "version": "1.0.0",
+  "description": "A bot for Discord app where you can bet on some game results",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Meneghin98/lol-discord-bot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Meneghin98/lol-discord-bot/issues"
+  },
+  "homepage": "https://github.com/Meneghin98/lol-discord-bot#readme",
+  "dependencies": {
+    "discord.js": "^12.5.3",
+    "dotenv": "^10.0.0"
+  }
+}
