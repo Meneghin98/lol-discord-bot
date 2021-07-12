@@ -7,6 +7,7 @@ const path = require('path');
 const command = require('./command.js');
 
 const client = new Client();
+require('discord-buttons')(client);
 client.login(EnvUtils.getEnv(EnvUtils.DISCORD_BOT_TOKEN));
 
 client.on(CLIENT_READY, () => {
