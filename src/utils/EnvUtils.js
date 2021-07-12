@@ -1,4 +1,4 @@
-import dotenv from 'dotenv'
+const dotenv = require('dotenv');
 dotenv.config()
 
 function getEnv(envname){
@@ -9,9 +9,7 @@ function getEnv(envname){
     return env;
 }
 
-const EnvUtils = Object.freeze({
+module.exports = Object.freeze({
     getEnv: getEnv,
     DISCORD_BOT_TOKEN: 'DISCORD_BOT_TOKEN'
 })
-
-export default EnvUtils;

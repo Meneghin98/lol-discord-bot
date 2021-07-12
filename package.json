@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "A bot for Discord app where you can bet on some game results",
   "main": "src/index.js",
-  "type": "module",
   "scripts": {
     "start": "node ."
   },

@@ -1,28 +1,33 @@
-import EnvUtils from './utils/EnvUtils.js'
-import {Client, Constants} from 'discord.js'
+const EnvUtils = require('./utils/EnvUtils.js');
+const {Client, Constants} = require( 'discord.js');
 const {PRESENCE_UPDATE, CLIENT_READY} = Constants.Events;
 
+const fs = require('fs');
+const path = require('path');
+const command = require('./command.js');
+
 const client = new Client();
-
-client.on(CLIENT_READY, () => {
-	client.guilds.cache.forEach(createBotChannel)
-});
-
-// client.on(PRESENCE_UPDATE, (a, b) => {
-// 	console.log(a, b);
-// });
-
 client.login(EnvUtils.getEnv(EnvUtils.DISCORD_BOT_TOKEN));
 
-function createBotChannel(guild){
-	const BOT_CHANNEL_NAME = "League bets";
+client.on(CLIENT_READY, () => {
+	console.log('The client is ready!')
 
-	const channels = guild.channels.cache.filter(c => c.name === BOT_CHANNEL_NAME)
-
-	if(channels.size == 0){
-		// guild.createChannel(BOT_CHANNEL_NAME, 'text')
-		guild.channels.create(BOT_CHANNEL_NAME)
-	} else {
-		console.log("channel already exists")
+	const readCommands = (dir) => {
+		const files = fs.readdirSync(path.join(__dirname, dir))
+		for (const file of files) {
+			const stat = fs.lstatSync(path.join(__dirname, dir, file))
+			if (stat.isDirectory()) {
+				readCommands(path.join(dir, file))
+			} else {
+				const option = require(path.join(__dirname, dir, file))
+				command(client, option)
+			}
+		}
 	}
-}
+	
+	readCommands('commands')
+});
+
+client.on(PRESENCE_UPDATE, (oldPresence, newPresence) => {
+	console.log(newPresence.user.username, newPresence.activities);
+});
