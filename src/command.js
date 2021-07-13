@@ -2,6 +2,8 @@ const { Constants } = require("discord.js");
 const client = require("./client.js");
 const { MESSAGE_CREATE } = Constants.Events;
 const { prefix } = require("./defaults.json");
+const fs = require("fs");
+const path = require("path");
 
 const validatePermissions = (permissions) => {
   const validPermissions = [
@@ -47,7 +49,7 @@ const validatePermissions = (permissions) => {
 
 const allCommands = {};
 
-module.exports = (commandOptions) => {
+const load = (commandOptions) => {
   let { commands, permissions = [] } = commandOptions;
 
   // Ensure the command and aliases are in an array
@@ -138,3 +140,17 @@ module.exports.listen = () => {
     }
   });
 };
+
+const loadCommands = (dir) => {
+  const files = fs.readdirSync(path.join(__dirname, dir));
+  for (const file of files) {
+    const stat = fs.lstatSync(path.join(__dirname, dir, file));
+    if (stat.isDirectory()) {
+      loadCommands(path.join(dir, file));
+    } else {
+      const option = require(path.join(__dirname, dir, file));
+      load(option);
+    }
+  }
+};
+module.exports.loadCommands = loadCommands;
