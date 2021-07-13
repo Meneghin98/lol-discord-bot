@@ -5,7 +5,7 @@ const axios = require('axios')
 module.exports = async (summName) => {
     const requestConfig = {
         headers: {
-            "X-Riot-Token": EnvUtils.getEnv(EnvUtils.RIOT_API_TOKEN)
+            "X-Riot-Token": EnvUtils.RIOT_API_TOKEN
         }
     }
     

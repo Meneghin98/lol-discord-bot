@@ -8,7 +8,7 @@ const command = require('./command.js');
 
 const client = new Client();
 require('discord-buttons')(client);
-client.login(EnvUtils.getEnv(EnvUtils.DISCORD_BOT_TOKEN));
+client.login(EnvUtils.DISCORD_BOT_TOKEN);
 
 client.on(CLIENT_READY, () => {
 	console.log('The client is ready!')

@@ -10,7 +10,6 @@ function getEnv(envname){
 }
 
 module.exports = Object.freeze({
-    getEnv: getEnv,
-    DISCORD_BOT_TOKEN: 'DISCORD_BOT_TOKEN',
-    RIOT_API_TOKEN: 'RIOT_API_TOKEN'
+    DISCORD_BOT_TOKEN: getEnv('DISCORD_BOT_TOKEN'),
+    RIOT_API_TOKEN: getEnv('RIOT_API_TOKEN')
 })
