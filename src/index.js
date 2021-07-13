@@ -1,16 +1,13 @@
-const EnvUtils = require('./utils/EnvUtils.js');
-const {Client, Constants} = require( 'discord.js');
+const { Constants } = require( 'discord.js');
 const {PRESENCE_UPDATE, CLIENT_READY} = Constants.Events;
-
+const client = require('./client.js');
 const fs = require('fs');
 const path = require('path');
 const command = require('./command.js');
 
-const client = new Client();
-require('discord-buttons')(client);
-client.login(EnvUtils.DISCORD_BOT_TOKEN);
 
 client.on(CLIENT_READY, () => {
+	console.log(client.user.id);
 	console.log('The client is ready!')
 
 	const readCommands = (dir) => {
@@ -21,12 +18,14 @@ client.on(CLIENT_READY, () => {
 				readCommands(path.join(dir, file))
 			} else {
 				const option = require(path.join(__dirname, dir, file))
-				command(client, option)
+				command(option)
 			}
 		}
 	}
 	
 	readCommands('commands')
+
+	command.listen()
 });
 
 client.on(PRESENCE_UPDATE, (oldPresence, newPresence) => {
